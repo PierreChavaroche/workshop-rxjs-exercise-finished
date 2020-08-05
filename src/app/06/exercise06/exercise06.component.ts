@@ -4,11 +4,11 @@ import { debounceTime, map, distinctUntilChanged, tap, switchMap, filter } from 
 import { IUser } from './user.interface';
 
 @Component({
-  selector: 'app-exercise05',
-  templateUrl: './exercise05.component.html',
-  styleUrls: ['./exercise05.component.scss']
+  selector: 'app-exercise06',
+  templateUrl: './exercise06.component.html',
+  styleUrls: ['./exercise06.component.scss']
 })
-export class Exercise05Component implements OnInit, AfterViewInit, OnDestroy {
+export class Exercise06Component implements OnInit, AfterViewInit, OnDestroy {
   userResults$: Observable<IUser[]>;
   @ViewChild('inputUserSearch', { static: false }) inputUserSearch: ElementRef;
   private inputSubscription: Subscription;

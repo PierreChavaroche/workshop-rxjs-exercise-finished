@@ -7,7 +7,7 @@ import { Exercise01Component } from './01/exercise01/exercise01.component';
 import { Exercise02Component } from './02/exercise02/exercise02.component';
 import { Exercise03Component } from './03/exercise03/exercise03.component';
 import { Exercise04Component } from './04/exercise04/exercise04.component';
-import { Exercise05Component } from './05/exercise05/exercise05.component';
+import { Exercise06Component } from './06/exercise06/exercise06.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { Exercise05Component } from './05/exercise05/exercise05.component';
     Exercise02Component,
     Exercise03Component,
     Exercise04Component,
-    Exercise05Component,
+    Exercise06Component,
   ],
   imports: [
     BrowserModule,
