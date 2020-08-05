@@ -1,0 +1,22 @@
+<div *ngIf="comments$ | async as comments">
+    <ng-container *ngFor="let comment of comments">
+        <dl>
+            <dt>Post-ID</dt>
+            <dd>{{ comment.postId }}</dd>
+
+            <dt>ID</dt>
+            <dd>{{ comment.id }}</dd>
+
+            <dt>Name</dt>
+            <dd>{{ comment.name }}</dd>
+
+            <dt>E-Mail</dt>
+            <dd>{{ comment.email }}</dd>
+
+            <dt>Text</dt>
+            <dd>{{ comment.body }}</dd>
+        </dl>
+
+        <!-- <hr/> -->
+    </ng-container>
+</div>
