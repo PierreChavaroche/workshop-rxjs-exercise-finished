@@ -27,6 +27,7 @@ export class Exercise05Component implements OnInit, AfterViewInit, OnDestroy {
      *    - Use "debounceTime" when listening to the input event
      *    - Only request JSONPlaceholder servers for users once. Cache the result in private variable.
      *    - Use a "Subject" to emit new search results
+     *    - Implement interface "IUser" if necessary
      *    - Don't forget to unsubscribe in OnDestroy if necessary
      */
     this.userResults$ = this.userResultsSource.asObservable().pipe(
