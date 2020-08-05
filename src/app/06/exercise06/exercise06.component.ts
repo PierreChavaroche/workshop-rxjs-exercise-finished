@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { fromEvent, Subscription, Subject, Observable, of, from, defer } from 'rxjs';
+import { fromEvent, Subscription, Subject, Observable, of, from, defer, iif } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, tap, switchMap, filter } from 'rxjs/operators';
 import { IUser } from './user.interface';
 
@@ -11,8 +11,6 @@ import { IUser } from './user.interface';
 export class Exercise06Component implements OnInit, AfterViewInit, OnDestroy {
   userResults$: Observable<IUser[]>;
   @ViewChild('inputUserSearch', { static: false }) inputUserSearch: ElementRef;
-  private inputSubscription: Subscription;
-  private userResultsSource: Subject<Observable<IUser[]>> = new Subject();
   private users: IUser[] = [];
 
   constructor() { }
@@ -27,39 +25,25 @@ export class Exercise06Component implements OnInit, AfterViewInit, OnDestroy {
      *    - Use "@ViewChild" to get the input element
      *    - Use "debounceTime" and "distinctUntilChanged" when listening to the input event
      *    - Only request JSONPlaceholder servers for users once. Cache the result in private variable.
-     *    - Use a "Subject" to emit new search results
      *    - Implement interface "IUser" if necessary
-     *    - Don't forget to unsubscribe in OnDestroy if necessary
      */
-    this.userResults$ = this.userResultsSource.asObservable().pipe(
-      switchMap(users$ => users$ ? users$ : of(null))
-    );
   }
 
   ngAfterViewInit(): void {
     if (this.inputUserSearch) {
-      this.inputSubscription = fromEvent(this.inputUserSearch.nativeElement, 'input')
-          .pipe(
-            debounceTime(500),
-            map(() => this.inputUserSearch.nativeElement.value),
-            distinctUntilChanged(),
-            tap(value => {
-              this.search(value);
-            })
-          )
-          .subscribe()
-    }
-  }
-
-  private search(searchValue: string) {
-    if (searchValue) {
-      const userResults$ = this.getUsers$().pipe(
-        map(users => users.filter(userLoop => userLoop.name.includes(searchValue)))
-      );
-
-      this.userResultsSource.next(userResults$);
-    } else {
-      this.userResultsSource.next(of([]));
+      this.userResults$ = fromEvent(this.inputUserSearch.nativeElement, 'input')
+        .pipe(
+          debounceTime(500),
+          map(() => this.inputUserSearch.nativeElement.value),
+          distinctUntilChanged(),
+          switchMap(searchValue => iif(
+            () => !!searchValue,
+            this.getUsers$().pipe(
+              map(users => users.filter(userLoop => userLoop.name.includes(searchValue)))
+            ),
+            of([])
+          ))
+        )
     }
   }
 
@@ -87,8 +71,6 @@ export class Exercise06Component implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.inputSubscription) {
-      this.inputSubscription.unsubscribe();
-    }
+    
   }
 }
