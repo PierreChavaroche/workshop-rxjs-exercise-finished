@@ -19,9 +19,9 @@ export class Exercise01Component implements OnInit {
   */
 
     const obs = interval(1000).pipe(
-      take(20),
       filter(x => x % 2 === 0),
-      map(x => x * 100)
+      map(x => x * 100),
+      take(10),
     );
 
     obs.subscribe(x => console.log(x));
