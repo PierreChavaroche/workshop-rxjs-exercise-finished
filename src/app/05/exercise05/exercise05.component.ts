@@ -24,6 +24,7 @@ export class Exercise05Component implements OnInit, AfterViewInit, OnDestroy {
      * Like autocomplete.
      * 
      * Hints: 
+     *    - Use "@ViewChild" to get the input element
      *    - Use "debounceTime" when listening to the input event
      *    - Only request JSONPlaceholder servers for users once. Cache the result in private variable.
      *    - Use a "Subject" to emit new search results
