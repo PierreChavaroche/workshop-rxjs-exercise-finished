@@ -1,0 +1,12 @@
+<input type="number" min="1" max="10" step="1" placeholder="ID" #input>
+
+<select #select>
+  <option selected hidden> -- select an option -- </option>
+  <option value="posts">posts</option>
+  <option value="albums">albums</option>
+  <option value="todos">todos</option>
+</select>
+
+<div *ngIf="data$ | async as data">
+    {{ data | json }}
+</div>
